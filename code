@@ -1,0 +1,1001 @@
+package org.asnworks.projects.brahmas;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.asnworks.projects.brahmas.model.Brahma;
+import org.asnworks.projects.brahmas.model.Tag;
+import org.asnworks.projects.brahmas.service.BrahmaService;
+import org.asnworks.projects.brahmas.utils.ServiceUtils;
+
+/**
+ * Hello world!
+ * 
+ */
+public class Test {
+	public static void main(String[] args) {
+
+		BrahmaService brahmaService = ServiceUtils.getBrahmaService();
+
+		Set<Tag> tags = new HashSet<Tag>();
+
+		Tag tag = new Tag();
+		tag.setTagName("Namakaranam1");
+		tag.setCreatedDate(new java.util.Date());
+		tag.setModifiedDate(new java.util.Date());
+		tag.setCreatedBy("admin");
+		tag.setModifiedBy("admin");
+
+		Tag tag1 = new Tag();
+		tag1.setTagName("Kalyanam1");
+		tag1.setCreatedDate(new java.util.Date());
+		tag1.setModifiedDate(new java.util.Date());
+		tag1.setCreatedBy("admin");
+		tag1.setModifiedBy("admin");
+
+		tags.add(tag);
+		tags.add(tag1);
+
+		Brahma brahma = new Brahma();
+		brahma.setFirstName("firstName2");
+		brahma.setLastName("lastName2");
+		brahma.setAge("age2");
+		brahma.setCity("city2");
+		brahma.setMobile("mobile2");
+		brahma.setEmail("email2");
+		brahma.setDescription("description2");
+		brahma.setTags(tags);
+		brahma.setCreatedDate(new java.util.Date());
+		brahma.setModifiedDate(new java.util.Date());
+		brahma.setCreatedBy("admin");
+		brahma.setModifiedBy("admin");
+		
+		
+
+		System.out.println(brahmaService.save(brahma));
+		//
+
+		// for (int i = 1; i <= 100; i++) {
+		// Set<String> tags = new HashSet<>();
+		// tags.add("tag" + i);
+		// tags.add("another tag" + i);
+		//
+		// Brahma brahma = new Brahma();
+		// brahma.setFirstName("firstName" + i);
+		// brahma.setLastName("lastName" + i);
+		// brahma.setAge("age" + i);
+		// brahma.setCity("city" + i);
+		// brahma.setMobile("mobile" + i);
+		// brahma.setEmail("email" + i);
+		// brahma.setDescription("description" + i);
+		// brahma.setCreatedDate(new java.util.Date());
+		// brahma.setModifiedDate(new java.util.Date());
+		// brahma.setCreatedBy("admin");
+		// brahma.setModifiedBy("admin");
+		//
+		// System.out.println(brahmaService.save(brahma));
+		// }
+
+		// System.out.println(brahmaService.getAll().size());
+
+		// System.out.println(brahmaService.findByMobile("mobile123"));
+
+		// System.out.println(brahmaService.findByEmail("email123"));
+	}
+}
+
+
+
+
+/**
+ * 
+ */
+package org.asnworks.projects.brahmas.model;
+
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+/**
+ * @author M1033375
+ * 
+ */
+@Entity
+@Table(name = "Brahma")
+public class Brahma implements java.io.Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6496593041754223438L;
+
+	@Id
+	// @GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "BH_ID")
+	private String id;
+	@Column(name = "BH_FIRST_NAME")
+	private String firstName;
+	@Column(name = "BH_LAST_NAME")
+	private String lastName;
+	@Column(name = "BH_AGE")
+	private String age;
+	@Column(name = "BH_CITY")
+	private String city;
+	@Column(name = "BH_MOBILE")
+	private String mobile;
+	@Column(name = "BH_EMAIL")
+	private String email;
+	@Column(name = "BH_DESCRIPTION")
+	private String description;
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "BRAHMA_TAGS", joinColumns = { @JoinColumn(name = "BH_ID") }, inverseJoinColumns = { @JoinColumn(name = "TAG_ID") })
+	private Set<Tag> tags = new HashSet<Tag>();
+	@Column(name = "BH_CREATED_DATE")
+	private Date createdDate;
+	@Column(name = "BH_MODIFIED_DATE")
+	private Date modifiedDate;
+	@Column(name = "BH_CREATED_BY")
+	private String createdBy;
+	@Column(name = "BH_MODIFIED_BY")
+	private String modifiedBy;
+
+	public Brahma() {
+		this.id = UUID.randomUUID().toString();
+	}
+
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the firstName
+	 */
+	public String getFirstName() {
+		return firstName;
+	}
+
+	/**
+	 * @param firstName
+	 *            the firstName to set
+	 */
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	/**
+	 * @return the lastName
+	 */
+	public String getLastName() {
+		return lastName;
+	}
+
+	/**
+	 * @param lastName
+	 *            the lastName to set
+	 */
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	/**
+	 * @return the age
+	 */
+	public String getAge() {
+		return age;
+	}
+
+	/**
+	 * @param age
+	 *            the age to set
+	 */
+	public void setAge(String age) {
+		this.age = age;
+	}
+
+	/**
+	 * @return the city
+	 */
+	public String getCity() {
+		return city;
+	}
+
+	/**
+	 * @param city
+	 *            the city to set
+	 */
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	/**
+	 * @return the mobile
+	 */
+	public String getMobile() {
+		return mobile;
+	}
+
+	/**
+	 * @param mobile
+	 *            the mobile to set
+	 */
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+	/**
+	 * @param email
+	 *            the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description
+	 *            the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * @return the tags
+	 */
+	public Set<Tag> getTags() {
+		return tags;
+	}
+
+	/**
+	 * @param tags
+	 *            the tags to set
+	 */
+	public void setTags(Set<Tag> tags) {
+		this.tags = tags;
+	}
+
+	/**
+	 * @return the createdDate
+	 */
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	/**
+	 * @param createdDate
+	 *            the createdDate to set
+	 */
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	/**
+	 * @return the modifiedDate
+	 */
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+
+	/**
+	 * @param modifiedDate
+	 *            the modifiedDate to set
+	 */
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
+	/**
+	 * @return the createdBy
+	 */
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	/**
+	 * @param createdBy
+	 *            the createdBy to set
+	 */
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	/**
+	 * @return the modifiedBy
+	 */
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+
+	/**
+	 * @param modifiedBy
+	 *            the modifiedBy to set
+	 */
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return String
+				.format("Brahma [id=%s, firstName=%s, lastName=%s, age=%s, city=%s, mobile=%s, email=%s, description=%s, tags=%s, createdDate=%s, modifiedDate=%s, createdBy=%s, modifiedBy=%s]",
+						id, firstName, lastName, age, city, mobile, email,
+						description, tags, createdDate, modifiedDate,
+						createdBy, modifiedBy);
+	}
+
+}
+
+
+/**
+ * 
+ */
+package org.asnworks.projects.brahmas.model;
+
+import java.util.Date;
+import java.util.UUID;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+/**
+ * @author M1033375
+ * 
+ */
+
+@Entity
+@Table(name = "Tag", uniqueConstraints = { @UniqueConstraint(columnNames = { "TAG_NAME" }) })
+public class Tag implements java.io.Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2950211398971426992L;
+	@Id
+	// @GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "TAG_ID")
+	private String id;
+	@Column(name = "TAG_NAME")
+	private String tagName;
+	// @ManyToOne
+	//@JoinColumn(name = "BH_ID")
+	// private Brahma brahma;
+	@Column(name = "TAG_CREATED_DATE")
+	private Date createdDate;
+	@Column(name = "TAG_MODIFIED_DATE")
+	private Date modifiedDate;
+	@Column(name = "TAG_CREATED_BY")
+	private String createdBy;
+	@Column(name = "TAG_MODIFIED_BY")
+	private String modifiedBy;
+
+	public Tag() {
+
+		this.id = UUID.randomUUID().toString();
+	}
+
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the tagName
+	 */
+	public String getTagName() {
+		return tagName;
+	}
+
+	/**
+	 * @param tagName
+	 *            the tagName to set
+	 */
+	public void setTagName(String tagName) {
+		this.tagName = tagName;
+	}
+
+	/**
+	 * @return the createdDate
+	 */
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	/**
+	 * @param createdDate
+	 *            the createdDate to set
+	 */
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	/**
+	 * @return the modifiedDate
+	 */
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+
+	/**
+	 * @param modifiedDate
+	 *            the modifiedDate to set
+	 */
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
+	/**
+	 * @return the createdBy
+	 */
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	/**
+	 * @param createdBy
+	 *            the createdBy to set
+	 */
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	/**
+	 * @return the modifiedBy
+	 */
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+
+	/**
+	 * @param modifiedBy
+	 *            the modifiedBy to set
+	 */
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return String
+				.format("Tag [id=%s, tagName=%s, createdDate=%s, modifiedDate=%s, createdBy=%s, modifiedBy=%s]",
+						id, tagName, createdDate, modifiedDate, createdBy,
+						modifiedBy);
+	}
+	
+	
+
+}
+
+
+/**
+ * 
+ */
+package org.asnworks.projects.brahmas.service;
+
+import java.util.List;
+
+import org.asnworks.projects.brahmas.model.Brahma;
+
+/**
+ * @author M1033375
+ * 
+ */
+public interface BrahmaService extends Service {
+
+	Brahma save(Brahma brahma);
+
+	List<Brahma> getAll();
+
+	Brahma findByMobile(String mobile);
+
+	Brahma findByEmail(String email);
+}
+
+
+/**
+ * 
+ */
+package org.asnworks.projects.brahmas.service;
+
+/**
+ * @author M1033375
+ * 
+ */
+public interface Service extends java.io.Serializable {
+
+}
+
+
+/**
+ * 
+ */
+package org.asnworks.projects.brahmas.service;
+
+/**
+ * @author M1033375
+ *
+ */
+public class ServiceImpl implements Service{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3988781263150683486L;
+
+}
+
+
+
+/**
+ * 
+ */
+package org.asnworks.projects.brahmas.service;
+
+import java.util.List;
+
+import org.asnworks.projects.brahmas.model.Tag;
+
+/**
+ * @author M1033375
+ * 
+ */
+public interface TagService extends Service{
+
+	Tag save(Tag tag);
+
+	List<Tag> getAll();
+
+	Tag findByTagName(String tagName);
+
+}
+
+
+
+/**
+ * 
+ */
+package org.asnworks.projects.brahmas.service.exceptions;
+
+/**
+ * @author M1033375
+ * 
+ */
+public class ServiceException extends RuntimeException {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7108048708206595966L;
+
+	public ServiceException(String arg0) {
+		super(arg0);
+	}
+
+	public ServiceException(Throwable arg0) {
+		super(arg0);
+	}
+
+	public ServiceException(String arg0, Throwable arg1) {
+		super(arg0, arg1);
+	}
+
+}
+
+
+
+/**
+ * 
+ */
+package org.asnworks.projects.brahmas.service.impl;
+
+import java.util.List;
+
+import org.asnworks.projects.brahmas.model.Brahma;
+import org.asnworks.projects.brahmas.service.BrahmaService;
+import org.asnworks.projects.brahmas.service.ServiceImpl;
+import org.asnworks.projects.brahmas.service.exceptions.ServiceException;
+import org.asnworks.projects.brahmas.utils.HibernateUtils;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+/**
+ * @author M1033375
+ * 
+ */
+public class BrahmaServiceImpl extends ServiceImpl implements BrahmaService {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -47367451527344403L;
+
+	private BrahmaServiceImpl() {
+	}
+
+	private static BrahmaServiceImpl brahmaServiceImpl = new BrahmaServiceImpl();
+
+	public static BrahmaServiceImpl getInstance() {
+		return brahmaServiceImpl;
+	}
+
+	@Override
+	public Brahma save(Brahma brahma) {
+
+		Session session = HibernateUtils.currentSession();
+		Transaction tx = null;
+		boolean rollback = true;
+		try {
+			tx = session.beginTransaction();
+			session.saveOrUpdate(brahma);
+			tx.commit();
+			rollback = false;
+		} catch (Exception exception) {
+			throw new ServiceException(exception);
+		} finally {
+			if (rollback && tx != null) {
+				tx.rollback();
+			}
+			HibernateUtils.closeSession();
+		}
+		return brahma;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Brahma> getAll() {
+		List<Brahma> brahmas = null;
+		try {
+			Session session = HibernateUtils.currentSession();
+			Query query = session.createQuery("from Brahma brahma");
+			brahmas = (List<Brahma>) query.list();
+			HibernateUtils.closeSession();
+
+		} catch (Exception exception) {
+			throw new ServiceException(exception);
+		}
+		return brahmas;
+	}
+
+	@Override
+	public Brahma findByMobile(String mobile) {
+		Brahma brahma = null;
+		try {
+			Session session = HibernateUtils.currentSession();
+			Query query = session
+					.createQuery("from Brahma brahma where brahma.mobile =:mobile");
+			query.setString("mobile", mobile);
+			brahma = (Brahma) query.uniqueResult();
+			HibernateUtils.closeSession();
+		} catch (Exception exception) {
+			throw new ServiceException(exception);
+		}
+		return brahma;
+	}
+
+	@Override
+	public Brahma findByEmail(String email) {
+		Brahma brahma = null;
+
+		try {
+			Session session = HibernateUtils.currentSession();
+			Query query = session
+					.createQuery("from Brahma brahma where brahma.email =:email");
+			query.setString("email", email);
+			brahma = (Brahma) query.uniqueResult();
+			HibernateUtils.closeSession();
+		} catch (Exception exception) {
+			throw new ServiceException(exception);
+		}
+		return brahma;
+	}
+
+}
+
+
+
+/**
+ * 
+ */
+package org.asnworks.projects.brahmas.service.impl;
+
+import java.util.List;
+
+import org.asnworks.projects.brahmas.model.Tag;
+import org.asnworks.projects.brahmas.service.ServiceImpl;
+import org.asnworks.projects.brahmas.service.TagService;
+import org.asnworks.projects.brahmas.service.exceptions.ServiceException;
+import org.asnworks.projects.brahmas.utils.HibernateUtils;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+/**
+ * @author M1033375
+ * 
+ */
+public class TagServiceImpl extends ServiceImpl implements TagService {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 606840838322366795L;
+
+	private TagServiceImpl() {
+	}
+
+	private static TagServiceImpl tagServiceImpl = new TagServiceImpl();
+
+	public static TagServiceImpl getInstance() {
+		return tagServiceImpl;
+	}
+
+	@Override
+	public Tag save(Tag tag) {
+		Session session = HibernateUtils.currentSession();
+		Transaction tx = null;
+		boolean rollback = true;
+		try {
+			tx = session.beginTransaction();
+			session.saveOrUpdate(tag);
+			tx.commit();
+			rollback = false;
+		} catch (Exception exception) {
+			throw new ServiceException(exception);
+		} finally {
+			if (rollback && tx != null) {
+				tx.rollback();
+			}
+			HibernateUtils.closeSession();
+		}
+		return tag;
+	}
+
+	@Override
+	public List<Tag> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Tag findByTagName(String tagName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
+
+
+/**
+ * 
+ */
+package org.asnworks.projects.brahmas.utils;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+/**
+ * @author M1033375
+ * 
+ */
+public class HibernateUtils {
+
+	private static final SessionFactory sessionFactory;
+
+	static {
+		try {
+			// Create the SessionFactory
+			sessionFactory = new Configuration().configure()
+					.buildSessionFactory();
+		} catch (Throwable ex) {
+			// Make sure you log the exception, as it might be swallowed
+			System.err.print("Initial SessionFactory creation failed." + ex);
+			throw new ExceptionInInitializerError(ex);
+		}
+	}
+
+	public static final ThreadLocal<Session> session = new ThreadLocal<Session>();
+
+	public static Session currentSession() throws HibernateException {
+		Session s = (Session) session.get();
+		// Open a new Session, if this Thread has none yet
+		if (s == null) {
+			s = sessionFactory.openSession();
+			session.set(s);
+		}
+		return s;
+	}
+
+	public static void closeSession() throws HibernateException {
+		Session s = (Session) session.get();
+		session.set(null);
+		if (s != null)
+			s.close();
+	}
+}
+
+
+
+
+/**
+ * 
+ */
+package org.asnworks.projects.brahmas.utils;
+
+import org.asnworks.projects.brahmas.service.BrahmaService;
+import org.asnworks.projects.brahmas.service.impl.BrahmaServiceImpl;
+
+/**
+ * @author M1033375
+ * 
+ */
+public class ServiceUtils {
+
+	public static BrahmaService getBrahmaService() {
+		return BrahmaServiceImpl.getInstance();
+	}
+}
+
+
+
+
+
+<?xml version='1.0' encoding='utf-8'?>
+<!-- ~ Hibernate, Relational Persistence for Idiomatic Java ~ ~ License: 
+	GNU Lesser General Public License (LGPL), version 2.1 or later. ~ See the 
+	lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>. -->
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+	<session-factory>
+
+		<!-- Database connection settings -->
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="connection.url">jdbc:mysql://localhost:3306/brahmas_db</property>
+		<property name="connection.username">root</property>
+		<property name="connection.password">root</property>
+
+		<!-- JDBC connection pool (use the built-in) -->
+		<property name="connection.pool_size">1</property>
+
+		<!-- SQL dialect -->
+		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+
+		<!-- Disable the second-level cache -->
+		<property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
+
+		<!-- Echo all executed SQL to stdout -->
+		<property name="show_sql">true</property>
+
+		<!-- Drop and re-create the database schema on startup -->
+		<property name="hbm2ddl.auto">update</property>
+
+
+		<mapping class="org.asnworks.projects.brahmas.model.Tag" />
+		<mapping class="org.asnworks.projects.brahmas.model.Brahma" />
+		
+
+
+	</session-factory>
+
+</hibernate-configuration>
+
+
+
+
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.asnworks.projects.brahmas</groupId>
+  <artifactId>brahmas</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>brahmas</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.1.0.Final</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<build>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
